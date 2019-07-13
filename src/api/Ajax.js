@@ -10,7 +10,7 @@
  */
 
 import axios from 'axios'
-import { message } from 'antd';
+import { message } from 'antd'
 
 export default function ajax(url, data = {}, type = "GET") {
 
@@ -40,16 +40,16 @@ export default function ajax(url, data = {}, type = "GET") {
 
     })
 
-//     // 判断type类型是GET类型或者POST类型
-//     if (type === 'GET') {
-//         // type为GET时,发起axios.get请求
-//         return axios.get(url, { // 配置对象
-//             params: data // 指定请求参数
-//         })
-//     } else {
-//         // 否则发起post 请求
-//         return axios.post(url, data)
-//     }
+    //     // 判断type类型是GET类型或者POST类型
+    //     if (type === 'GET') {
+    //         // type为GET时,发起axios.get请求
+    //         return axios.get(url, { // 配置对象
+    //             params: data // 指定请求参数
+    //         })
+    //     } else {
+    //         // 否则发起post 请求
+    //         return axios.post(url, data)
+    //     }
 }
 
 // 在package.json中添加配置
