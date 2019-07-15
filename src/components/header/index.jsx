@@ -3,11 +3,12 @@ import { withRouter } from 'react-router-dom'
 import { Modal } from 'antd'
 
 import menuList from '../../config/menuconfig'
-import './index.less'
 import { formateDate } from '../../utils/dateUtils'
 import { reqWeather } from '../../api'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
+import LinkButton from '../link-button'
+import './index.less'
 
 class Header extends Component {
 
@@ -102,7 +103,7 @@ class Header extends Component {
             <div className="header">
                 <div className="header-top">
                     <span>欢迎，admin</span>
-                    <a href="javascriopt:" onClick={this.logout}>退出</a>
+                    <LinkButton onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">

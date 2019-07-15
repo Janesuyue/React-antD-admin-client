@@ -2,17 +2,26 @@
  * 要求:能根据接口文档定义接口请求
  * 包含应用中所有接口请求函数的模块
  * 每个函数的返回值的是promise
+ * 基本要求：能根据接口文档定义接口请求函数
  */
 import jsonp from 'jsonp'
 import ajax from './Ajax'
 import { message } from 'antd';
 
+const BASE = ''
+
 //  登录
 // export function reqLogin(username, password) {
 //     return ajax('./login',{username,password},'POST')
 // }
+export const reqLogin = (userName, password) => ajax(BASE + '/api/v1/auth/manager_login', { userName, password }, 'POST')
 
-export const reqLogin = (userName, password) => ajax('/api/v1/auth/manager_login', { userName, password }, 'POST')
+//获取一级/二级分类列表
+export const reqCategorys = (parentId) => ajax(BASE + '/manage/user/list', { parentId })
+// 添加分类
+export const reqAddCategory = (categoryName, parentId) => ajax(BASE + '/manage/user/add', { categoryName, parentId }, 'POST')
+// 更新分类
+export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax(BASE + '/manage/user/update', { categoryId, categoryName }, 'POST')
 
 /**
  * jsonp请求的接口请求函数

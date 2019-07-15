@@ -47,7 +47,6 @@ export default class Admin extends Component {
                             <Route path="/charts/pie" component={Pie} />
                             <Redirect to="/home" />
                         </Switch>
-
                     </Content>
                     <Footer style={{ textAlign: 'center', color: '#aaa' }}>footer</Footer>
                 </Layout>
