@@ -96,13 +96,15 @@ class Header extends Component {
     render() {
         const { currentTime, dayPictureUrl, weather } = this.state
 
+        const username = memoryUtils.user.username
+
         // 得到根据当前路径需要显示的title
         const title = this.getTitle()
 
         return (
             <div className="header">
                 <div className="header-top">
-                    <span>欢迎，admin</span>
+                    <span>欢迎，{username}</span>
                     <LinkButton onClick={this.logout}>退出</LinkButton>
                 </div>
                 <div className="header-bottom">

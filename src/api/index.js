@@ -14,14 +14,14 @@ const BASE = ''
 // export function reqLogin(username, password) {
 //     return ajax('./login',{username,password},'POST')
 // }
-export const reqLogin = (userName, password) => ajax(BASE + '/api/v1/auth/manager_login', { userName, password }, 'POST')
+export const reqLogin = (username, password) => ajax(BASE + '/login', { username, password }, 'POST')
 
 //获取一级/二级分类列表
-export const reqCategorys = (parentId) => ajax(BASE + '/manage/user/list', { parentId })
+export const reqCategorys = (parentId) => ajax(BASE + '/manage/category/list', { parentId })
 // 添加分类
-export const reqAddCategory = (categoryName, parentId) => ajax(BASE + '/manage/user/add', { categoryName, parentId }, 'POST')
+export const reqAddCategory = (categoryName, parentId) => ajax(BASE + '/manage/category/add', { categoryName, parentId }, 'POST')
 // 更新分类
-export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax(BASE + '/manage/user/update', { categoryId, categoryName }, 'POST')
+export const reqUpdateCategory = ({ categoryId, categoryName }) => ajax(BASE + '/manage/category/update', { categoryId, categoryName }, 'POST')
 
 /**
  * jsonp请求的接口请求函数

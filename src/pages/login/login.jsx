@@ -29,7 +29,7 @@ class LoginForm extends Component {
         this.props.form.validateFields(async (err, values) => {
             // 检验成功
             if (!err) {
-                const { userName, password } = values
+                const { username, password } = values
                 // reqLogin(userName, password).then(response => {
                 //     console.log('成功了', response.data)
                 // }).catch(error => {
@@ -44,17 +44,21 @@ class LoginForm extends Component {
                 // }
 
                 // 错误提示优化,错误提示统一管理
-                const response = await reqLogin(userName, password)
+                const response = await reqLogin(username, password)
                 // console.log('请求成功', response)
-                const result = response.data
-                console.log(result)
-                memoryUtils.user = result // 保存到内存中
-                storageUtile.saveUser(result) // 保存到local中
-                if(result.code === 'success'){
+                const result = response
+                // console.log(result)
+
+                if (result.status === 0) {
                     message.success('登录成功')
+
+                    const user = result.data
+                    memoryUtils.user = user // 保存到内存中
+                    storageUtile.saveUser(user) // 保存到local中
+
                     // 跳转到管理页面,replace方法(不需要回退到登录页)
                     this.props.history.replace('/')
-                }else{
+                } else {
                     message.error(result.message)
                 }
 
@@ -62,7 +66,7 @@ class LoginForm extends Component {
                 // console.log("检验失败")
             }
         });
-        
+
         // // 得到form对象
         // const form = this.props.form
         // // 获取表单项的输入数据
@@ -93,8 +97,9 @@ class LoginForm extends Component {
     render() {
         // 如果用户已经登录，自动跳转到管理界面
         const user = memoryUtils.user
-        if(user && user.token){
-            return <Redirect to='/'/>
+        // console.log(user)
+        if (user && user._id) {
+            return <Redirect to='/' />
         }
 
         // 获取具有强大属性的form对象
@@ -115,7 +120,7 @@ class LoginForm extends Component {
                         <Form onSubmit={this.handleSubmit} className="login-form">
                             <Form.Item>
                                 {/* getFieldDecorator('标识',{校验})(渲染组件) */}
-                                {getFieldDecorator('userName', {
+                                {getFieldDecorator('username', {
                                     // 配置对象:属性名是特定的一些名称
                                     // /^[a-zA-Z0-9]+$/ 匹配英文数字或者下划线,加号代表多个
                                     // 声明式验证:直接使用别人定义好的验证规则进行验证

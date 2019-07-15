@@ -31,11 +31,11 @@ export default function ajax(url, data = {}, type = "GET") {
 
         promise.then(response => {
             // 2)如果成功了,调用resolve(value)
-            resolve(response)
+            resolve(response.data)
 
         }).catch(error => {
             // 3)如果失败了,不调用reject(value),而是提示异常信息
-            message.error('请求出错了!')
+            message.error('请求出错了!' + error.message)
         })
 
     })

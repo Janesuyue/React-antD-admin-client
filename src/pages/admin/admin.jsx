@@ -23,7 +23,7 @@ export default class Admin extends Component {
         const user = memoryUtils.user
         // console.log(user)
         // 如果内存没有存储user ==> 当前用户没有登录
-        if (!user || !user.token) {
+        if (!user || !user._id) {
             // 自动跳转到登录(在render()中)
             return <Redirect to="/login" />
         }
