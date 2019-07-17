@@ -5,16 +5,64 @@ import {
     List
 } from 'antd'
 
+import LinkButton from '../../components/link-button'
+import { BASE_IMG_URL } from '../../utils/constants'
+import { reqCategory } from '../../api'
+
 const Item = List.Item
 
 /**
  * Product的详情子路由组件
  */
 export default class ProductDetail extends Component {
+
+    state = {
+        cName1: '',//一级分类列表
+        cName2: '',//二级分类列表
+    }
+
+    async componentDidMount() {
+        const { pCategoryId, categoryId } = this.props.location.state.product
+        if (pCategoryId === '0') { // 一级分类下的列表
+            const result = await reqCategory(pCategoryId)
+            const cName1 = result.data.name
+            this.setState({ cName1 })
+        } else { // 二级分类下的列表
+            /*
+            // 通过多个await发送多个请求:后面一个请求是在前一个请求成功返回之后请求
+            const result1 = await reqCategory(pCategoryId) // 获取一级分类列表
+            const result2 = await reqCategory(categoryId) // 获取二级分类列表
+            const cName1 = result1.data.name
+            const cName2 = result2.data.name
+            */
+
+            // 一次性发送多次请求，只有都成功了，才正常处理
+            const results = await Promise.all([reqCategory(pCategoryId), reqCategory(categoryId)])
+            const cName1 = results[0].data.name
+            const cName2 = results[1].data.name
+            this.setState({
+                cName1,
+                cName2
+            })
+        }
+    }
+
     render() {
+
+        // 读取携带过来的state数据
+        const { name, desc, price, imgs, detail } = this.props.location.state.product
+
+        const { cName1, cName2 } = this.state
+
         const title = (
             <span>
-                <Icon type='arrow-left' />
+                <LinkButton>
+                    <Icon
+                        type='arrow-left'
+                        style={{ marginRight: 10, fontSize: 20 }}
+                        onClick={() => this.props.history.goBack()}
+                    />
+                </LinkButton>
                 商品详情
             </span>
         )
@@ -23,38 +71,38 @@ export default class ProductDetail extends Component {
                 <List>
                     <Item>
                         <span className="left">商品名称:</span>
-                        <span>联想ThinkPad 翼4809</span>
+                        <span>{name}</span>
                     </Item>
                     <Item>
                         <span className="left">商品描述:</span>
-                        <span>年度重量级新品，X390、T490全新登场 更加轻薄机身设计9</span>
+                        <span>{desc}</span>
                     </Item>
                     <Item>
                         <span className="left">商品价格:</span>
-                        <span>65999</span>
+                        <span>{price}元</span>
                     </Item>
                     <Item>
                         <span className="left">所属分类:</span>
-                        <span>电脑 ---> 笔记本</span>
+                        <span>{cName1} {cName2 ? ' ---> ' + cName2 : ''}</span>
                     </Item>
                     <Item>
                         <span className="left">商品图片:</span>
                         <span>
-                            <img
-                                className="product-img"
-                                src="https://img14.360buyimg.com/n1/s450x450_jfs/t1/28779/38/10926/201019/5c8a2900E631566f0/fac1038641ffd945.jpg"
-                                alt="img"
-                            />
-                            <img
-                                className="product-img"
-                                src="https://img14.360buyimg.com/n1/s450x450_jfs/t1/28779/38/10926/201019/5c8a2900E631566f0/fac1038641ffd945.jpg"
-                                alt="img"
-                            />
+                            {
+                                imgs.map(img => (
+                                    <img
+                                        key={img}
+                                        src={BASE_IMG_URL + img}
+                                        className="product-img"
+                                        alt="img"
+                                    />
+                                ))
+                            }
                         </span>
                     </Item>
                     <Item>
                         <span className="left">商品详情:</span>
-                        <span dangerouslySetInnerHTML={{__html:'<h1 style="color: red">商品详情</h1>'}}></span>
+                        <span dangerouslySetInnerHTML={{ __html: detail }}></span>
                     </Item>
                 </List>
             </Card>

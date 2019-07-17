@@ -53,6 +53,23 @@ export const reqSearchProducts = (pageNum, pageSize, searchName, searchType) => 
     [searchType]: searchName
 })
 
+// 根据分类ID获取分类名称
+export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', { categoryId })
+
+// 对商品进行上架/下架处理
+export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/product/updateStatus', { productId, status }, 'POST')
+
+// 图片删除
+export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete', { name }, 'POST')
+
+// // 添加商品
+// export const reqAddProduct = (product) => ajax(BASE + '/manage/product/add', product, 'POST')
+
+// // 修改商品
+// export const reqUpdateProduct = (product) => ajax(BASE + '/manage/product/update', product, 'POST')
+
+// 添加/修改商品
+export const reqAddOrUpdateProduct = (product) => ajax(BASE + '/manage/product/' + (product._id ? 'update' : 'add'), product, 'POST')
 
 /**
  * jsonp请求的接口请求函数
