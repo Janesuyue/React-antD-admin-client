@@ -24,7 +24,7 @@ export default class ProductDetail extends Component {
     async componentDidMount() {
         const { pCategoryId, categoryId } = this.props.location.state.product
         if (pCategoryId === '0') { // 一级分类下的列表
-            const result = await reqCategory(pCategoryId)
+            const result = await reqCategory(categoryId)
             const cName1 = result.data.name
             this.setState({ cName1 })
         } else { // 二级分类下的列表

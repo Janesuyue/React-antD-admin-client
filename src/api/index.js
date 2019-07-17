@@ -60,7 +60,7 @@ export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', 
 export const reqUpdateStatus = (productId, status) => ajax(BASE + '/manage/product/updateStatus', { productId, status }, 'POST')
 
 // 图片删除
-export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete', { name }, 'POST')
+export const reqDeleteImg = (roleName) => ajax(BASE + '/manage/img/delete', { roleName }, 'POST')
 
 // // 添加商品
 // export const reqAddProduct = (product) => ajax(BASE + '/manage/product/add', product, 'POST')
@@ -70,6 +70,15 @@ export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete', { name }
 
 // 添加/修改商品
 export const reqAddOrUpdateProduct = (product) => ajax(BASE + '/manage/product/' + (product._id ? 'update' : 'add'), product, 'POST')
+
+// 获取所有角色的列表
+export const reqRoles = () => ajax(BASE + '/manage/role/list')
+
+// 添加角色
+export const reqAddRole = (roleName) => ajax(BASE + '/manage/role/add', { roleName }, 'POST')
+
+// 更新角色(设置角色权限)
+export const reqUpdateRole = (role) => ajax(BASE + '/manage/role/update', role, 'POST')
 
 /**
  * jsonp请求的接口请求函数
