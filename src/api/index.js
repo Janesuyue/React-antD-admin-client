@@ -80,6 +80,15 @@ export const reqAddRole = (roleName) => ajax(BASE + '/manage/role/add', { roleNa
 // 更新角色(设置角色权限)
 export const reqUpdateRole = (role) => ajax(BASE + '/manage/role/update', role, 'POST')
 
+// 获取所有用户的列表
+export const reqUsers = () => ajax(BASE + '/manage/user/list')
+
+// 删除指定的用户
+export const reqDeletelUser = (userId) => ajax(BASE + '/manage/user/delete', { userId }, 'POST')
+
+// 添加/更新用户
+export const reqAddOrUpdateUser = (user) => ajax(BASE + '/manage/user/' + (user._id ? 'update' : 'add'), user, 'POST')
+
 /**
  * jsonp请求的接口请求函数
  */
